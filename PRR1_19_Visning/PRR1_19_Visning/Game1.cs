@@ -13,8 +13,8 @@ namespace PRR1_19_Visning
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Texture2D xwing;
-        Vector2 xwingPos = new Vector2(100, 300);
+        Texture2D xwing; // Vår bild på xwingen
+        Vector2 xwingPos = new Vector2(100, 300);  // Positionen
         List<Vector2> xwingBulletPos = new List<Vector2>();
 
         KeyboardState kNewState;
@@ -86,6 +86,11 @@ namespace PRR1_19_Visning
                 xwingBulletPos[i] = xwingBulletPos[i] - new Vector2(0,1);
             }
 
+            // Tab bort objekt säkert
+            RemoveObjects();
+
+
+
             kOldState = kNewState;
 
             // TODO: Add your update logic here
@@ -108,7 +113,7 @@ namespace PRR1_19_Visning
             {
                 Rectangle rec = new Rectangle();
                 rec.Location = bulletPos.ToPoint();
-                rec.Size = new Point(10,10);
+                rec.Size = new Point(30,30);
                 spriteBatch.Draw(xwing, rec, Color.Red);
             }
             
@@ -117,6 +122,20 @@ namespace PRR1_19_Visning
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+        }
+
+        void RemoveObjects()
+        {
+            List<Vector2> temp = new List<Vector2>();
+            foreach (var item in xwingBulletPos)
+            {
+                if (item.Y >= 50)
+                {
+                    temp.Add(item);
+                }
+            }
+
+            xwingBulletPos = temp;
         }
     }
 }
